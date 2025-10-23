@@ -1,7 +1,27 @@
 import streamlit as st
 import pandas as pd
-from memory_manager import supabase  # Reutilizamos el cliente de Supabase
+from supabase import create_client
 
+st.set_page_config(page_title="Dashboard de Agente IA", layout="wide")
+st.title("Monitoring Dashboard del Agente IA")
+
+# --- Ingreso de credenciales Supabase ---
+st.sidebar.header("Configuración de Supabase")
+url = st.sidebar.text_input("SUPABASE_URL", type="default")
+key = st.sidebar.text_input("SUPABASE_KEY", type="password")
+
+# Solo crear el cliente si ambas claves fueron ingresadas
+if url and key:
+    try:
+        supabase = create_client(url, key)
+    except Exception as e:
+        st.error(f"Error al conectar con Supabase: {e}")
+        st.stop()
+else:
+    st.warning("Por favor ingresa tus credenciales de Supabase en el panel lateral.")
+    st.stop()
+
+# --- Función para cargar los datos ---
 def load_all_data():
     """Carga todos los chats de la base de datos."""
     try:
@@ -15,10 +35,6 @@ def load_all_data():
     except Exception as e:
         st.error(f"Error al cargar datos: {e}")
         return pd.DataFrame()
-
-# --- Configuración de la página ---
-st.set_page_config(page_title="Dashboard de Agente IA", layout="wide")
-st.title("Monitoring Dashboard del Agente IA")
 
 # --- Cuerpo de la App ---
 df = load_all_data()
