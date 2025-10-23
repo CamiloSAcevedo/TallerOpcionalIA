@@ -1,10 +1,10 @@
 langchain==0.1.14
-langchain-core==0.1.42
-langchain-community==0.0.29
+langchain-core==0.1.46
+langchain-community==0.0.30
 langchain-groq==0.1.3
-python-telegram-bot
-streamlit
-supabase
-python-dotenv
-tavily-python # Opcional, para b´usqueda
-pandas
+python-telegram-bot==21.2
+streamlit==1.37.1
+supabase==2.7.4
+python-dotenv==1.0.1
+tavily-python==0.3.3
+pandas==2.2.2
